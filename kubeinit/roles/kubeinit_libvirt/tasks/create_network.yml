@@ -39,6 +39,20 @@
 #
 # We install all OVN requirements in the ovn-central host
 #
+
+- name: Enable repos  for OVN central packages in CentOS/RHEL
+  ansible.builtin.shell: |
+    dnf config-manager --set-enabled nfv
+    dnf update
+  args:
+    executable: /bin/bash
+  register: _result
+  changed_when: "_result.rc == 0"
+  delegate_to: "{{ kubeinit_ovn_central_host }}"
+  when: hostvars[kubeinit_ovn_central_host].distribution_family == 'CentOS'
+
+
+
 - name: Install OVN central packages in CentOS/RHEL
   ansible.builtin.shell: |
     dnf install -y centos-release-nfv-openvswitch
