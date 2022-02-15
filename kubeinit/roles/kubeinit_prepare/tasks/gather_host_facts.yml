@@ -42,6 +42,14 @@
         package_manager: auto
       when: _result_facts.ansible_facts.ansible_distribution == 'RedHat'
 
+    - name: Set distro_family for Rocky
+      ansible.builtin.set_fact:
+        distro_family: "CentOS"
+        qemu_user: "qemu"
+        host_os: "redhat"
+        package_manager: auto
+      when: _result_facts.ansible_facts.ansible_os_family == 'RedHat'
+
     - name: Set distro_family for Fedora
       ansible.builtin.set_fact:
         distro_family: "Fedora"
